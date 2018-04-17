@@ -198,4 +198,21 @@ describe('events', function() {
       queue1.add({});
     });
   });
+
+  it('should listen to custom msg', function(done) {
+    var queue1 = utils.buildQueue();
+    var queue2 = utils.buildQueue();
+
+    var testmsg = 'test msg';
+
+    queue1.on('custom:msg', function(msg) {
+      if (msg == testmsg) {
+        done();
+      }
+    });
+
+    setTimeout(() => {
+      queue2.publish(testmsg);
+    }, 100);
+  });
 });
